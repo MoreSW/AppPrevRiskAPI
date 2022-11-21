@@ -53,6 +53,24 @@ namespace appPrevencionRiesgos.Controllers
             }
         }
 
+        [HttpGet("uid/{id}")]
+        public async Task<ActionResult<UserInformationModel>> GetOneUserByEmailAsync(string id)
+        {
+            try
+            {
+                var information = await _userService.GetOneUserByEmailAsync(id);
+                return Ok(information);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<UserInformationModel>> PostUserAsync([FromBody] UserInformationModel information)
         {
@@ -62,7 +80,7 @@ namespace appPrevencionRiesgos.Controllers
                     return BadRequest(ModelState);
 
                 var newInformation = await _userService.CreateUser(information);
-                var newId = Convert.ToString(newInformation.UserId);
+                var newId = Convert.ToString(newInformation.Id);
                 return Created($"/api/userinformation/{newId}", newInformation);
             }
             catch (NotFoundElementException ex)
@@ -80,8 +98,27 @@ namespace appPrevencionRiesgos.Controllers
         {
             try
             {
-                information.UserId = id;
+                information.Id = new ObjectId(id);
                 var updatedInformation = await _userService.UpdateUserAsync(id, information);
+                return Ok(updatedInformation);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happened: {ex.Message}.");
+            }
+        }
+
+        [HttpPut("uid/{id}")]
+        public async Task<ActionResult<UserInformationModel>> PutUserInformationByEmailAsync(string id, [FromBody] UserInformationModel information)
+        {
+            try
+            {
+                information.UserId = id;
+                var updatedInformation = await _userService.UpdateUserByEmailAsync(id, information);
                 return Ok(updatedInformation);
             }
             catch (NotFoundElementException ex)
@@ -100,6 +137,24 @@ namespace appPrevencionRiesgos.Controllers
             try
             {
                 await _userService.DeleteUserAsync(id);
+                return Ok();
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
+            }
+        }
+
+        [HttpDelete("uid/{id}")]
+        public async Task<ActionResult> DeleteInformationByEmail(string id)
+        {
+            try
+            {
+                await _userService.DeleteUserByEmailAsync(id);
                 return Ok();
             }
             catch (NotFoundElementException ex)
