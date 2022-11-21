@@ -4,6 +4,7 @@ using appPrevencionRiesgos.Exceptions;
 using appPrevencionRiesgos.Model;
 using appPrevencionRiesgos.Model.Security;
 using AutoMapper;
+using Microsoft.SharePoint.Client;
 using Microsoft.VisualBasic;
 using MongoDB.Bson;
 
@@ -39,6 +40,16 @@ namespace appPrevencionRiesgos.Services
             }
         }
 
+        public async Task DeleteUserByEmailAsync(string uId)
+        {
+            var result = await GetOneUserByEmailAsync(uId);
+            await _userRepository.DeleteUserByEmailAsync(uId);
+            if (result == null)
+            {
+                throw new Exception("Database Error.");
+            }
+        }
+
         public async Task<IEnumerable<UserInformationModel>> GetAllUsersAsync()
         {
             var informationEntityList = await _userRepository.GetAllUsersAsync();
@@ -55,12 +66,37 @@ namespace appPrevencionRiesgos.Services
             return _mapper.Map<UserInformationModel>(user);
         }
 
+        public async Task<UserInformationModel> GetOneUserByEmailAsync(string uId)
+        {
+            var user = await _userRepository.GetOneUserByEmailAsync(uId);
+
+            if (user == null)
+                throw new NotFoundElementException($"Information with userId: {uId} does not exists.");
+
+            return _mapper.Map<UserInformationModel>(user);
+        }
+
         public async Task<UserInformationModel> UpdateUserAsync(string userId, UserInformationModel userInformation)
         {
             var result = await GetOneUserAsync(userId);
             var informationEntity = _mapper.Map<UserInformationEntity>(userInformation);
-            informationEntity.UserId = userId;
+            informationEntity.Id = new ObjectId(userId);
             await _userRepository.UpdateUserAsync(userId, informationEntity);
+
+            if (result != null)
+            {
+                return _mapper.Map<UserInformationModel>(informationEntity);
+            }
+
+            throw new Exception("Database Error.");
+        }
+
+        public async Task<UserInformationModel> UpdateUserByEmailAsync(string uId, UserInformationEntity user)
+        {
+            var result = await GetOneUserByEmailAsync(uId);
+            var informationEntity = _mapper.Map<UserInformationEntity>(user);
+            informationEntity.UserId = uId;
+            await _userRepository.UpdateUserByEmailAsync(uId, informationEntity);
 
             if (result != null)
             {
