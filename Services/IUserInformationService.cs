@@ -12,7 +12,7 @@ namespace appPrevencionRiesgos.Services
         Task<UserInformationModel> UpdateUserAsync(string userId, UserInformationModel userInformation);
         Task DeleteUserAsync(string userId);
         Task<UserInformationModel> GetOneUserByEmailAsync(string uId);
-        Task<UserInformationModel> UpdateUserByEmailAsync(string uId, UserInformationEntity user);
+        Task<UserInformationModel> UpdateUserByEmailAsync(string uId, UserInformationModel user);
         Task DeleteUserByEmailAsync(string uId);
     }
 }

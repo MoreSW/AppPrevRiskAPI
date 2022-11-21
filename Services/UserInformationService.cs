@@ -91,7 +91,7 @@ namespace appPrevencionRiesgos.Services
             throw new Exception("Database Error.");
         }
 
-        public async Task<UserInformationModel> UpdateUserByEmailAsync(string uId, UserInformationEntity user)
+        public async Task<UserInformationModel> UpdateUserByEmailAsync(string uId, UserInformationModel user)
         {
             var result = await GetOneUserByEmailAsync(uId);
             var informationEntity = _mapper.Map<UserInformationEntity>(user);
