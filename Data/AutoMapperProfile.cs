@@ -13,6 +13,8 @@ namespace appPrevencionRiesgos.Data
                 .ReverseMap();
             this.CreateMap<LocationEntity, LocationModel>()
                 .ReverseMap();
+            this.CreateMap<UserConfidenceEntity, UserConfidenceModel>()
+                .ReverseMap();
         }
     }
 }

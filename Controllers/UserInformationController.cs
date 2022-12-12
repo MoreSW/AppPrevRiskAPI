@@ -71,6 +71,26 @@ namespace appPrevencionRiesgos.Controllers
             }
         }
 
+        [HttpPost("userconfidence")]
+        public async Task<ActionResult<UserConfidenceExtendedModel>> PostAddUserConfidenceAsync([FromBody] UserConfidenceExtendedModel information)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var newInformation = await _userService.AddUserConfidence(information);
+                return Created($"/api/userinformation/userconfidence", newInformation);
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
+            }
+        }
         [HttpPost]
         public async Task<ActionResult<UserInformationModel>> PostUserAsync([FromBody] UserInformationModel information)
         {
