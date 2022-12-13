@@ -1,8 +1,10 @@
 ﻿using appPrevencionRiesgos.Data.Entities;
+using Microsoft.BusinessData.MetadataModel;
 using Microsoft.SharePoint.Client;
 using Microsoft.VisualBasic;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Net.Mail;
 
 namespace appPrevencionRiesgos.Data.Repository
 {
@@ -56,6 +58,13 @@ namespace appPrevencionRiesgos.Data.Repository
         {
             var userToUpdate = Builders<UserInformationEntity>.Filter.Eq(i => i.UserId, user.UserId);
             await collection.ReplaceOneAsync(userToUpdate, user);
+        }
+
+        public async Task UpdateUserConfidenceAsync(IUserConfidenceEntity userConfidenceEntity)
+        {
+            var update = Builders<UserInformationEntity>.Update.AddToSet(u => u.ConfidenceUsers, userConfidenceEntity.Data);
+            var userToUpdate = Builders<UserInformationEntity>.Filter.Eq(i => i.Email, userConfidenceEntity.EmailFrom);
+            await collection.UpdateOneAsync(userToUpdate, update);
         }
     }
 }

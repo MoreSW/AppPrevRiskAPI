@@ -12,5 +12,6 @@ namespace appPrevencionRiesgos.Data.Repository
         Task<UserInformationEntity> GetOneUserByEmailAsync(string uId);
         Task UpdateUserByEmailAsync(string uId, UserInformationEntity user);
         Task DeleteUserByEmailAsync(string uId);
+        Task UpdateUserConfidenceAsync(IUserConfidenceEntity userConfidenceEntity);
     }
 }

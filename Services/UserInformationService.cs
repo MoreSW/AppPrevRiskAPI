@@ -19,6 +19,23 @@ namespace appPrevencionRiesgos.Services
             _userRepository = userRepository;
             _mapper = mapper;
         }
+
+        public async Task<UserConfidenceExtendedModel> AddUserConfidence(UserConfidenceExtendedModel userConfidenceInformation)
+        {
+            var userConfidenceSender = new UserConfidenceSenderEntity(userConfidenceInformation.EmailFrom, userConfidenceInformation.EmailTo);
+            var userConfidenceReceiver = new UserConfidenceReceiverEntity(userConfidenceInformation.EmailTo, userConfidenceInformation.EmailFrom);
+
+            await _userRepository.UpdateUserConfidenceAsync(userConfidenceReceiver);
+            await _userRepository.UpdateUserConfidenceAsync(userConfidenceSender);
+
+            if (true)
+            {
+                return userConfidenceInformation;
+            }
+
+            throw new Exception("Database Error.");
+        }
+
         public async Task<UserInformationModel> CreateUser(UserInformationModel userInformation)
         {
             var userEntity = _mapper.Map<UserInformationEntity>(userInformation);

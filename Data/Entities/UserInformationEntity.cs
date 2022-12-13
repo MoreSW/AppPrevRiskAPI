@@ -14,5 +14,6 @@ namespace appPrevencionRiesgos.Data.Entities
         public string Phone { get; set; }
         public string City { get; set; }
         public string Province { get; set; }
+        public IList<IDictionary<string, string>>? ConfidenceUsers { get; set; }
     }
 }
