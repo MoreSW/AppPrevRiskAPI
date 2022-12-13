@@ -22,15 +22,17 @@ namespace appPrevencionRiesgos.Services
 
         public async Task<UserConfidenceExtendedModel> AddUserConfidence(UserConfidenceExtendedModel userConfidenceInformation)
         {
-            var userConfidenceTo = new UserConfidenceEntity(userConfidenceInformation.EmailTo, "pending");
-            var userConfidenceFrom = new UserConfidenceEntity(userConfidenceInformation.EmailFrom, "sent");
-            
-            await _userRepository.UpdateUserConfidence(userConfidenceFrom);
-            await _userRepository.UpdateUserConfidence(userConfidenceTo);
+            var userConfidenceSender = new UserConfidenceSenderEntity(userConfidenceInformation.EmailFrom, userConfidenceInformation.EmailTo);
+            var userConfidenceReceiver = new UserConfidenceReceiverEntity(userConfidenceInformation.EmailTo, userConfidenceInformation.EmailFrom);
+
+            await _userRepository.UpdateUserConfidenceAsync(userConfidenceReceiver);
+            await _userRepository.UpdateUserConfidenceAsync(userConfidenceSender);
+
             if (true)
             {
                 return userConfidenceInformation;
             }
+
             throw new Exception("Database Error.");
         }
 

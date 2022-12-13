@@ -4,6 +4,7 @@ using Microsoft.SharePoint.Client;
 using Microsoft.VisualBasic;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Net.Mail;
 
 namespace appPrevencionRiesgos.Data.Repository
 {
@@ -59,10 +60,10 @@ namespace appPrevencionRiesgos.Data.Repository
             await collection.ReplaceOneAsync(userToUpdate, user);
         }
 
-        public async Task UpdateUserConfidenceAsync(UserConfidenceEntity userConfidenceEntity)
+        public async Task UpdateUserConfidenceAsync(IUserConfidenceEntity userConfidenceEntity)
         {
-            var update = Builders<UserInformationEntity>.Update.AddToSet(u => u.ConfidenceUsers, userConfidenceEntity.data);
-            var userToUpdate = Builders<UserInformationEntity>.Filter.Eq(i => i.Email, userConfidenceEntity.data["Email"]);
+            var update = Builders<UserInformationEntity>.Update.AddToSet(u => u.ConfidenceUsers, userConfidenceEntity.Data);
+            var userToUpdate = Builders<UserInformationEntity>.Filter.Eq(i => i.Email, userConfidenceEntity.EmailFrom);
             await collection.UpdateOneAsync(userToUpdate, update);
         }
     }

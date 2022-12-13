@@ -16,12 +16,13 @@ namespace appPrevencionRiesgos.Model
     }
     public class UserConfidenceExtendedModel
     {
-        [Required(ErrorMessage = "Email address is required")]
+        [Required(ErrorMessage = "Email sender address is required")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string? EmailFrom { get; set; }
-        [Required(ErrorMessage = "Email address is required")]
+        [Required(ErrorMessage = "Email receiver address is required")]
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string? EmailTo { get; set; }
-        public string? Status { get; set; }
+        public string PendingStatus = "pending";
+        public string SentStatus = "sent";
     }
 }

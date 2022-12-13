@@ -1,13 +1,35 @@
 ﻿namespace appPrevencionRiesgos.Data.Entities
 {
-    public class UserConfidenceEntity
+    public interface IUserConfidenceEntity
     {
-        public IDictionary<string, string> data { get; set; }
-        public UserConfidenceEntity(string? email, string? status)
+        public string? EmailFrom { get; set; }
+        public IDictionary<string, string>? Data { get; set; }
+    }
+    public class UserConfidenceSenderEntity : IUserConfidenceEntity
+    {
+        public string? EmailFrom { get; set; }
+        public IDictionary<string, string>? Data { get; set; }
+        public UserConfidenceSenderEntity(string? emailFrom, string? emailTo)
         {
-            data = new Dictionary<string, string>() { 
-                { "Email" , email }, 
-                { "Status" , status },
+            EmailFrom = emailFrom;
+            Data = new Dictionary<string, string>()
+            {
+                {"email", emailTo},
+                {"status", "sent"},
+            };
+        }
+    }
+    public class UserConfidenceReceiverEntity : IUserConfidenceEntity
+    {
+        public string? EmailFrom { get; set; }
+        public IDictionary<string, string>? Data { get; set; }
+        public UserConfidenceReceiverEntity(string? emailFrom, string? emailTo)
+        {
+            EmailFrom = emailFrom;
+            Data = new Dictionary<string, string>()
+            {
+                {"email", emailTo},
+                {"status", "pending"},
             };
         }
     }
