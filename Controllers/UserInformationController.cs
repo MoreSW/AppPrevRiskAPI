@@ -188,11 +188,29 @@ namespace appPrevencionRiesgos.Controllers
         }
 
         [HttpDelete("uid/{id}")]
-        public async Task<ActionResult> DeleteInformationByEmail(string id)
+        public async Task<ActionResult> DeleteInformationByUidAsync(string id)
         {
             try
             {
-                await _userService.DeleteUserByEmailAsync(id);
+                await _userService.DeleteUserByUidAsync(id);
+                return Ok();
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
+            }
+        }
+
+        [HttpDelete("email/{email}")]
+        public async Task<ActionResult> DeleteInformationByEmailAsync(string email)
+        {
+            try
+            {
+                await _userService.DeleteUserByEmailAsync(email);
                 return Ok();
             }
             catch (NotFoundElementException ex)

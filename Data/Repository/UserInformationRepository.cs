@@ -27,7 +27,13 @@ namespace appPrevencionRiesgos.Data.Repository
             await collection.DeleteOneAsync(userToDelete);
         }
 
-        public async Task DeleteUserByEmailAsync(string uId)
+        public async Task DeleteUserByEmailAsync(string email)
+        {
+            var userToDelete = Builders<UserInformationEntity>.Filter.Eq(i => i.Email, email);
+            await collection.DeleteOneAsync(userToDelete);
+        }
+
+        public async Task DeleteUserByUidAsync(string uId)
         {
             var userToDelete = Builders<UserInformationEntity>.Filter.Eq(i => i.UserId, uId);
             await collection.DeleteOneAsync(userToDelete);
