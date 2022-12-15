@@ -57,10 +57,10 @@ namespace appPrevencionRiesgos.Services
             }
         }
 
-        public async Task DeleteUserByEmailAsync(string uId)
+        public async Task DeleteUserByUidAsync(string uId)
         {
             var result = await GetOneUserByUidAsync(uId);
-            await _userRepository.DeleteUserByEmailAsync(uId);
+            await _userRepository.DeleteUserByUidAsync(uId);
             if (result == null)
             {
                 throw new Exception("Database Error.");

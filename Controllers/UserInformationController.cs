@@ -188,11 +188,11 @@ namespace appPrevencionRiesgos.Controllers
         }
 
         [HttpDelete("uid/{id}")]
-        public async Task<ActionResult> DeleteInformationByEmail(string id)
+        public async Task<ActionResult> DeleteInformationByUidAsync(string id)
         {
             try
             {
-                await _userService.DeleteUserByEmailAsync(id);
+                await _userService.DeleteUserByUidAsync(id);
                 return Ok();
             }
             catch (NotFoundElementException ex)
