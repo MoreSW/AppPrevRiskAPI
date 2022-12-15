@@ -67,6 +67,16 @@ namespace appPrevencionRiesgos.Services
             }
         }
 
+        public async Task DeleteUserByEmailAsync(string email)
+        {
+            var result = await GetOneUserByEmailAsync(email);
+            await _userRepository.DeleteUserByEmailAsync(email);
+            if (result == null)
+            {
+                throw new Exception("Database Error.");
+            }
+        }
+
         public async Task<IEnumerable<UserInformationModel>> GetAllUsersAsync()
         {
             var informationEntityList = await _userRepository.GetAllUsersAsync();

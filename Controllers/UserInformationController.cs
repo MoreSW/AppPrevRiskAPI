@@ -204,5 +204,23 @@ namespace appPrevencionRiesgos.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
             }
         }
+
+        [HttpDelete("email/{email}")]
+        public async Task<ActionResult> DeleteInformationByEmailAsync(string email)
+        {
+            try
+            {
+                await _userService.DeleteUserByEmailAsync(email);
+                return Ok();
+            }
+            catch (NotFoundElementException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
+            }
+        }
     }
 }
