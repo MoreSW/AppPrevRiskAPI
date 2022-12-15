@@ -43,7 +43,12 @@ namespace appPrevencionRiesgos.Data.Repository
             return await collection.FindAsync(new BsonDocument { { "_id", new ObjectId(userId) } }).Result.FirstAsync();
         }
 
-        public async Task<UserInformationEntity> GetOneUserByEmailAsync(string uId)
+        public async Task<UserInformationEntity> GetOneUserByEmailAsync(string email)
+        {
+            return await collection.FindAsync(new BsonDocument { { "Email", email } }).Result.FirstAsync();
+        }
+
+        public async Task<UserInformationEntity> GetOneUserByUidAsync(string uId)
         {
             return await collection.FindAsync(new BsonDocument { { "UserId", uId } }).Result.FirstAsync();
         }

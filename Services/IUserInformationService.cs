@@ -12,7 +12,8 @@ namespace appPrevencionRiesgos.Services
         Task<UserInformationModel> GetOneUserAsync(string userId);
         Task<UserInformationModel> UpdateUserAsync(string userId, UserInformationModel userInformation);
         Task DeleteUserAsync(string userId);
-        Task<UserInformationModel> GetOneUserByEmailAsync(string uId);
+        Task<UserInformationModel> GetOneUserByUidAsync(string uId);
+        Task<UserInformationModel> GetOneUserByEmailAsync(string email);
         Task<UserInformationModel> UpdateUserByEmailAsync(string uId, UserInformationModel user);
         Task DeleteUserByEmailAsync(string uId);
     }
