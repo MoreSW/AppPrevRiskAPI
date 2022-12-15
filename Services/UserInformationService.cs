@@ -59,7 +59,7 @@ namespace appPrevencionRiesgos.Services
 
         public async Task DeleteUserByEmailAsync(string uId)
         {
-            var result = await GetOneUserByEmailAsync(uId);
+            var result = await GetOneUserByUidAsync(uId);
             await _userRepository.DeleteUserByEmailAsync(uId);
             if (result == null)
             {
@@ -83,9 +83,9 @@ namespace appPrevencionRiesgos.Services
             return _mapper.Map<UserInformationModel>(user);
         }
 
-        public async Task<UserInformationModel> GetOneUserByEmailAsync(string uId)
+        public async Task<UserInformationModel> GetOneUserByUidAsync(string uId)
         {
-            var user = await _userRepository.GetOneUserByEmailAsync(uId);
+            var user = await _userRepository.GetOneUserByUidAsync(uId);
 
             if (user == null)
                 throw new NotFoundElementException($"Information with userId: {uId} does not exists.");
@@ -110,7 +110,7 @@ namespace appPrevencionRiesgos.Services
 
         public async Task<UserInformationModel> UpdateUserByEmailAsync(string uId, UserInformationModel user)
         {
-            var result = await GetOneUserByEmailAsync(uId);
+            var result = await GetOneUserByUidAsync(uId);
             var informationEntity = _mapper.Map<UserInformationEntity>(user);
             informationEntity.UserId = uId;
             await _userRepository.UpdateUserByEmailAsync(uId, informationEntity);
