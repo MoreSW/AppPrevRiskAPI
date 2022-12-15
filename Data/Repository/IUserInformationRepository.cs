@@ -10,6 +10,7 @@ namespace appPrevencionRiesgos.Data.Repository
         Task UpdateUserAsync(string userId, UserInformationEntity user);
         Task DeleteUserAsync(string userId);
         Task<UserInformationEntity> GetOneUserByUidAsync(string uId);
+        Task<UserInformationEntity> GetOneUserByEmailAsync(string email);
         Task UpdateUserByEmailAsync(string uId, UserInformationEntity user);
         Task DeleteUserByEmailAsync(string uId);
         Task UpdateUserConfidenceAsync(IUserConfidenceEntity userConfidenceEntity);

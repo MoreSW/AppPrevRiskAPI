@@ -71,7 +71,7 @@ namespace appPrevencionRiesgos.Controllers
             }
         }
 
-        /*[HttpGet("email/{email}")]
+        [HttpGet("email/{email}")]
         public async Task<ActionResult<UserInformationModel>> GetOneUserByEmailAsync(string email)
         {
             try
@@ -87,7 +87,7 @@ namespace appPrevencionRiesgos.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
             }
-        }*/
+        }
 
         [HttpPost("userconfidence")]
         public async Task<ActionResult<UserConfidenceExtendedModel>> PostAddUserConfidenceAsync([FromBody] UserConfidenceExtendedModel information)

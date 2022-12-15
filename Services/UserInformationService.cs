@@ -83,6 +83,16 @@ namespace appPrevencionRiesgos.Services
             return _mapper.Map<UserInformationModel>(user);
         }
 
+        public async Task<UserInformationModel> GetOneUserByEmailAsync(string email)
+        {
+            var user = await _userRepository.GetOneUserByEmailAsync(email);
+
+            if (user == null)
+                throw new NotFoundElementException($"Information with email: {email} does not exists.");
+
+            return _mapper.Map<UserInformationModel>(user);
+        }
+
         public async Task<UserInformationModel> GetOneUserByUidAsync(string uId)
         {
             var user = await _userRepository.GetOneUserByUidAsync(uId);
