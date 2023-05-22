@@ -29,9 +29,9 @@ namespace appPrevencionRiesgos.Controllers
             {
                 return NotFound(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happened: {ex.Message}.");
             }
         }
 
@@ -47,9 +47,9 @@ namespace appPrevencionRiesgos.Controllers
             {
                 return NotFound(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happened: {ex.Message}.");
             }
         }
 
@@ -65,9 +65,9 @@ namespace appPrevencionRiesgos.Controllers
             {
                 return NotFound(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happened: {ex.Message}.");
             }
         }
 
@@ -83,9 +83,9 @@ namespace appPrevencionRiesgos.Controllers
             {
                 return NotFound(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happened: {ex.Message}.");
             }
         }
 
@@ -108,9 +108,9 @@ namespace appPrevencionRiesgos.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happened: {ex.Message}.");
             }
         }
         
@@ -130,9 +130,9 @@ namespace appPrevencionRiesgos.Controllers
             {
                 return NotFound(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex )
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happened: {ex.Message}.");
             }
         }
 
@@ -186,9 +186,9 @@ namespace appPrevencionRiesgos.Controllers
             {
                 return NotFound(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happened: {ex.Message}.");
             }
         }
 
@@ -204,9 +204,9 @@ namespace appPrevencionRiesgos.Controllers
             {
                 return NotFound(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happened: {ex.Message}.");
             }
         }
 
@@ -222,9 +222,9 @@ namespace appPrevencionRiesgos.Controllers
             {
                 return NotFound(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Something happend.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something happened: {ex.Message}.");
             }
         }
     }
