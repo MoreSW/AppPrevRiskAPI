@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.SharePoint.Client;
 using Microsoft.VisualBasic;
 using MongoDB.Bson;
+using System.Security;
 
 namespace appPrevencionRiesgos.Services
 {
@@ -14,6 +15,13 @@ namespace appPrevencionRiesgos.Services
     {
         private IUserInformationRepository _userRepository;
         private IMapper _mapper;
+        Dictionary<string, bool> hasException = new Dictionary<string, bool>()
+            {
+                { "Request not Found" , true },
+                { "Accepting request" , false },
+                { "Already accepted request" , true },
+                { "Duplicated request" , true }
+            };
         public UserInformationService(IUserInformationRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
@@ -22,18 +30,39 @@ namespace appPrevencionRiesgos.Services
 
         public async Task<UserConfidenceExtendedModel> AddUserConfidence(UserConfidenceExtendedModel userConfidenceInformation)
         {
-            var userConfidenceSender = new UserConfidenceSenderEntity(userConfidenceInformation.EmailFrom, userConfidenceInformation.EmailTo);
-            var userConfidenceReceiver = new UserConfidenceReceiverEntity(userConfidenceInformation.EmailTo, userConfidenceInformation.EmailFrom);
+            if(userConfidenceInformation.EmailFrom == userConfidenceInformation.EmailTo)
+                throw new AlreadyAddedElementException("Failed to add confidence user to list. The email were repeited.");
 
-            await _userRepository.UpdateUserConfidenceAsync(userConfidenceReceiver);
-            await _userRepository.UpdateUserConfidenceAsync(userConfidenceSender);
+            var senderUser = await _userRepository.GetOneUserByEmailAsync(userConfidenceInformation.EmailFrom);
+            var receiverUser = await _userRepository.GetOneUserByEmailAsync(userConfidenceInformation.EmailTo);
 
-            if (true)
+            var confidenceUserPosition = UserConfidenceStatus(senderUser, receiverUser.Email);
+            if (hasException[confidenceUserPosition.Item1])
             {
-                return userConfidenceInformation;
+                throw new AlreadyAddedElementException($"Failed to add confidence user to list. {confidenceUserPosition.Item1}.");
             }
 
-            throw new Exception("Database Error.");
+            if (confidenceUserPosition.Item1 == "Accepting request")
+            {
+                senderUser.ConfidenceUsers[confidenceUserPosition.Item2]["email"] = receiverUser.Email;
+                senderUser.ConfidenceUsers[confidenceUserPosition.Item2]["status"] = "accepted";
+                receiverUser.ConfidenceUsers[confidenceUserPosition.Item2]["email"] = senderUser.Email;
+                receiverUser.ConfidenceUsers[confidenceUserPosition.Item2]["status"] = "accepted";
+
+                await _userRepository.UpdateUserAsync(senderUser.UserId, senderUser);
+                await _userRepository.UpdateUserAsync(receiverUser.UserId, receiverUser);
+            }
+
+            if (confidenceUserPosition.Item1 == "Request not Found")
+            {
+                var userConfidenceSender = new UserConfidenceSenderEntity(senderUser.Email, receiverUser.Email);
+                var userConfidenceReceiver = new UserConfidenceReceiverEntity(receiverUser.Email, senderUser.Email);
+
+                await _userRepository.AddUserConfidenceToListAsync(userConfidenceReceiver);
+                await _userRepository.AddUserConfidenceToListAsync(userConfidenceSender);
+            }
+
+            return userConfidenceInformation;
         }
 
         public async Task<UserInformationModel> CreateUser(UserInformationModel userInformation)
@@ -141,6 +170,19 @@ namespace appPrevencionRiesgos.Services
             }
 
             throw new Exception("Database Error.");
+        }
+
+        public Tuple<string, int> UserConfidenceStatus (UserInformationEntity userConfidenceEntity, string userConfidenceEmail)
+        {
+            int i = 0;
+            for (i = 0; i < userConfidenceEntity.ConfidenceUsers.Count && userConfidenceEntity.ConfidenceUsers[i]["email"] != userConfidenceEmail; i++) { }
+            if (i == userConfidenceEntity.ConfidenceUsers.Count)
+                return Tuple.Create("Request not Found", -1);
+            if (userConfidenceEntity.ConfidenceUsers[i]["status"] != "sent")
+                return Tuple.Create("Accepting request", i);
+            if (userConfidenceEntity.ConfidenceUsers[i]["status"] != "accepted")
+                return Tuple.Create("Already accepted request", i);
+            return Tuple.Create("Duplicated request", i);
         }
     }
 }

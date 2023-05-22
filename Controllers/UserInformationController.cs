@@ -104,11 +104,16 @@ namespace appPrevencionRiesgos.Controllers
             {
                 return NotFound(ex.Message);
             }
+            catch (AlreadyAddedElementException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Something happened.");
             }
         }
+        
         [HttpPost]
         public async Task<ActionResult<UserInformationModel>> PostUserAsync([FromBody] UserInformationModel information)
         {

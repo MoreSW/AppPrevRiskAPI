@@ -16,6 +16,7 @@ namespace appPrevencionRiesgos.Data.Repository
         {
             collection = _mongoRepository.UserDbContext.GetCollection<UserInformationEntity>("UserInfoAPI");
         }
+
         public async Task CreateUser(UserInformationEntity user)
         {
             await collection.InsertOneAsync(user);
@@ -71,11 +72,28 @@ namespace appPrevencionRiesgos.Data.Repository
             await collection.ReplaceOneAsync(userToUpdate, user);
         }
 
-        public async Task UpdateUserConfidenceAsync(IUserConfidenceEntity userConfidenceEntity)
+        public async Task AddUserConfidenceToListAsync(IUserConfidenceEntity userConfidenceEntity)
         {
             var update = Builders<UserInformationEntity>.Update.AddToSet(u => u.ConfidenceUsers, userConfidenceEntity.Data);
             var userToUpdate = Builders<UserInformationEntity>.Filter.Eq(i => i.Email, userConfidenceEntity.EmailFrom);
             await collection.UpdateOneAsync(userToUpdate, update);
+        }
+        public async Task UpdateUserConfidenceAsync(IUserConfidenceEntity userConfidenceEntity)
+        {
+            var userFilter = Builders<UserInformationEntity>.Filter.And(
+                Builders<UserInformationEntity>.Filter.Eq("Email", userConfidenceEntity.EmailFrom),
+                Builders<UserInformationEntity>.Filter.ElemMatch(
+                    "ConfidenceUsers",
+                    Builders<UserInformationEntity>.Filter.Eq("email", userConfidenceEntity.Data["email"])
+                )
+            );
+
+            var update = Builders<UserInformationEntity>.Update.Set("confidenceUsers.$.status", "accepted");
+
+            //var result = await collection.Find(userFilter).FirstOrDefaultAsync();
+            //Console.WriteLine(result);
+
+            await collection.UpdateOneAsync(userFilter, update);
         }
     }
 }
