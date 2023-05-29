@@ -4,10 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-CFAdressBook6-A775F033-441D-4858-BFE9-D8A981FF14B4</UserSecretsId>
-    <BaseOutputPath>bin</BaseOutputPath>
-    <DockerDefaultTargetos>Linux</DockerDefaultTargetos>
-    <InvariantGlobalization>true</InvariantGlobalization>
+	  <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
   <ItemGroup>
