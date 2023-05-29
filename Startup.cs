@@ -41,6 +41,8 @@ namespace appPrevencionRiesgos
             services.AddControllers();
             services.AddTransient<IUserInformationService, UserInformationService>();
             services.AddTransient<IUserInformationRepository, UserInformationRepository>();
+            services.AddTransient<ILocationInformationService, LocationInformationService>();
+            services.AddTransient<ILocationInformationRepository, LocationInformationRepository>();
             //services.AddScoped<IUserService, UserService>();
             services.AddSingleton<IMongoDBServices, MongoDBService>();
             services.AddScoped<IMongoDBServices, MongoDBService>();

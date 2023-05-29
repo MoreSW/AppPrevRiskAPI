@@ -14,7 +14,7 @@ namespace appPrevencionRiesgos.Data.Repository
         private IMongoCollection<UserInformationEntity> collection;
         public UserInformationRepository()
         {
-            collection = _mongoRepository.UserDbContext.GetCollection<UserInformationEntity>("UserInfoAPI");
+            collection = _mongoRepository.UserDbContext.GetCollection<UserInformationEntity>("userinformation");
         }
 
         public async Task CreateUser(UserInformationEntity user)

@@ -14,7 +14,7 @@ namespace appPrevencionRiesgos.Data
             var settings = MongoClientSettings.FromConnectionString("mongodb+srv://nosimportas:0IPwUx72lVf85eDw@riesgo.wpl5wf1.mongodb.net/?retryWrites=true&w=majority");
             settings.ServerApi = new ServerApi(ServerApiVersion.V1);
             client = new MongoClient(settings);
-            basicInformationDbContext = client.GetDatabase("BasicInformation");
+            //basicInformationDbContext = client.GetDatabase("BasicInformation");
             UserDbContext = client.GetDatabase("UserInfoAPI");
             LocationDbContext = client.GetDatabase("LocationInformationAPI");
         }

@@ -31,7 +31,7 @@ namespace appPrevencionRiesgos.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Edited message.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
             }
         }
 
@@ -49,7 +49,7 @@ namespace appPrevencionRiesgos.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Edited message.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
             }
         }
 
@@ -67,7 +67,7 @@ namespace appPrevencionRiesgos.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Edited message.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
             }
         }
 
@@ -85,7 +85,7 @@ namespace appPrevencionRiesgos.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Edited message.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
             }
         }
 
@@ -110,7 +110,7 @@ namespace appPrevencionRiesgos.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Edited message.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
             }
         }
         
@@ -132,7 +132,7 @@ namespace appPrevencionRiesgos.Controllers
             }
             catch (Exception ex )
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Edited message.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
             }
         }
 
@@ -151,7 +151,7 @@ namespace appPrevencionRiesgos.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Edited message.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
             }
         }
 
@@ -170,7 +170,7 @@ namespace appPrevencionRiesgos.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Edited message.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
             }
         }
 
@@ -188,7 +188,7 @@ namespace appPrevencionRiesgos.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Edited message.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
             }
         }
 
@@ -206,7 +206,7 @@ namespace appPrevencionRiesgos.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Edited message.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
             }
         }
 
@@ -224,7 +224,7 @@ namespace appPrevencionRiesgos.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Edited message.");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Something Happened: {ex.Message}");
             }
         }
     }
