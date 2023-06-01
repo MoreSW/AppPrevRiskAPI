@@ -19,7 +19,7 @@ namespace appPrevencionRiesgos
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>()
-                        .UseUrls("http://0.0.0.0:3000", "https://0.0.0.0:3001"); ;
+                        .UseUrls("https://0.0.0.0:3001"); ;
                 });
     }
 }
